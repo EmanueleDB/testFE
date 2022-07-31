@@ -1,0 +1,9 @@
+.users {
+  .table > tbody > tr > td {
+    vertical-align: middle;
+  }
+  .delete {
+    cursor: pointer;
+    color: $primary;
+  }
+}

@@ -39,7 +39,7 @@
             />
           </div>
           <div class="col-12">
-            <b-form-checkbox v-model="user.hasPets"> Has pets </b-form-checkbox>
+            <b-form-checkbox v-model="user.hasPets">Has Pets</b-form-checkbox>
           </div>
           <div class="col-12">
             <b-btn type="submit" variant="success" class="float-right"
@@ -59,7 +59,7 @@ export default Vue.extend({
   name: "AddUserModal",
   data() {
     return {
-      user: {},
+      user: { hasPets: false },
     }
   },
   methods: {

@@ -6,11 +6,11 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue"
 import "bootstrap-vue/dist/bootstrap-vue.css"
 import "bootstrap/dist/css/bootstrap.css"
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faTrashCan, faEdit } from "@fortawesome/free-solid-svg-icons"
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
-library.add(faTrashCan, faCheck, faCircleXmark)
+library.add(faTrashCan, faCheck, faCircleXmark, faEdit)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false

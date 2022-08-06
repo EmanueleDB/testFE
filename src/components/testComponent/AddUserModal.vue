@@ -8,7 +8,16 @@
     <form @submit.prevent="saveUser()">
       <div class="flexcard">
         <div class="flexcard__header">
-          <h3>New user</h3>
+          <div class="col-12">
+            <div class="header">
+              <h3>New user</h3>
+              <font-awesome-icon
+                class="fa-lg cancel"
+                icon="fa-regular fa-circle-xmark"
+                @click="closeModal"
+              />
+            </div>
+          </div>
         </div>
         <div class="flexcard__body">
           <div class="col-12">
@@ -52,13 +61,6 @@
           <div class="col-12">
             <b-btn type="submit" variant="success" class="float-right"
               >Add</b-btn
-            >
-            <b-btn
-              type="button"
-              variant="danger"
-              class="float-right mr-2"
-              @click="closeModal"
-              >Cancel</b-btn
             >
           </div>
         </div>
@@ -132,6 +134,17 @@ export default Vue.extend({
       font-size: 12px;
       box-sizing: border-box;
     }
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    align-items: center;
+    cursor: pointer;
+  }
+  .cancel {
+    color: red;
   }
 }
 </style>

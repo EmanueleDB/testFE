@@ -8,13 +8,13 @@
         v-b-modal.addUserModal
         class="float-right"
         variant="primary"
-        @click="showModal = true"
+        @click="addUser"
         >Add user</b-btn
       >
     </div>
     <div class="col-12">
       <b-table striped hover :items="users" :fields="fields" class="text-center"
-        ><template v-slot:cell(actions)="{ item }">
+        ><template #cell(actions)="{ item }">
           <span>
             <font-awesome-icon
               v-b-tooltip.hover.top="'Delete'"
@@ -23,14 +23,28 @@
               @click="deleteUser(item)"
             />
           </span>
+          <span>
+            <font-awesome-icon
+              v-b-modal.addUserModal
+              v-b-tooltip.hover.top="'Edit'"
+              class="ml-2 edit"
+              icon="fa-edit"
+              @click="editUser(item)"
+            />
+          </span>
         </template>
-        <template v-slot:cell(hasPets)="{ item }">
+        <template #cell(hasPets)="{ item }">
           <font-awesome-icon v-if="item.hasPets" icon="fa-solid fa-check" />
           <font-awesome-icon v-else icon="fa-regular fa-circle-xmark" />
         </template>
       </b-table>
     </div>
-    <AddUserModal v-if="showModal" @close="showModal = false" @save="addUser" />
+    <AddUserModal
+      v-if="showModal"
+      @close="showModal = false"
+      @save="saveUser"
+      :id="id"
+    />
   </div>
 </template>
 
@@ -38,6 +52,7 @@
 import Vue from "vue"
 import axios from "axios"
 import AddUserModal from "@/components/testComponent/AddUserModal.vue"
+import unbind from "@/utils/unbind"
 
 export default Vue.extend({
   name: "TestComponent",
@@ -47,7 +62,7 @@ export default Vue.extend({
       users: [],
       fields: ["firstName", "lastName", "email", "age", "hasPets", "actions"],
       showModal: false,
-      user: {},
+      id: {},
     }
   },
   mounted() {
@@ -76,11 +91,19 @@ export default Vue.extend({
         console.log(e)
       }
     },
-    async addUser(user: Record<string, unknown>) {
+    addUser() {
+      this.id = {}
+      this.showModal = true
+    },
+    editUser(user: Record<string, unknown>) {
+      this.id = unbind(user)
+      this.showModal = true
+    },
+    async saveUser(user: Record<string, unknown>) {
       try {
         const response = await axios({
           url: `http://localhost:3000/user`,
-          method: "POST",
+          method: Object.keys(this.id).length > 0 ? "PATCH" : "POST",
           data: user,
         })
         if (response) await this.fetchUsers()

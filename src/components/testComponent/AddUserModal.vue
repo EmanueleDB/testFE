@@ -10,7 +10,9 @@
         <div class="flexcard__header">
           <div class="col-12">
             <div class="header">
-              <h3>New user</h3>
+              <h3>
+                {{ this.id.email ? "Edit User" : "New user" }}
+              </h3>
               <font-awesome-icon
                 class="fa-lg cancel"
                 icon="fa-regular fa-circle-xmark"
@@ -71,7 +73,6 @@
 
 <script lang="ts">
 import Vue from "vue"
-import unbind from "@/utils/unbind"
 
 export default Vue.extend({
   name: "AddUserModal",
@@ -94,11 +95,6 @@ export default Vue.extend({
   },
   mounted() {
     this.getUser()
-  },
-  watch: {
-    id(to) {
-      console.log(to)
-    },
   },
   methods: {
     saveUser() {

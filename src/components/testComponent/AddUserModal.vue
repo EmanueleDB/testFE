@@ -1,5 +1,10 @@
 <template>
-  <b-modal id="addUserModal" class="modal" :hide-footer="true">
+  <b-modal
+    id="addUserModal"
+    class="modal"
+    :hide-footer="true"
+    :hide-header="true"
+  >
     <form @submit.prevent="saveUser()">
       <div class="flexcard">
         <div class="flexcard__header">
@@ -39,11 +44,21 @@
             />
           </div>
           <div class="col-12">
-            <b-form-checkbox v-model="user.hasPets">Has Pets</b-form-checkbox>
+            <label>
+              <input type="checkbox" v-model="user.hasPets" />
+              Has Pets
+            </label>
           </div>
           <div class="col-12">
             <b-btn type="submit" variant="success" class="float-right"
               >Add</b-btn
+            >
+            <b-btn
+              type="button"
+              variant="danger"
+              class="float-right mr-2"
+              @click="closeModal"
+              >Cancel</b-btn
             >
           </div>
         </div>
@@ -54,17 +69,51 @@
 
 <script lang="ts">
 import Vue from "vue"
+import unbind from "@/utils/unbind"
 
 export default Vue.extend({
   name: "AddUserModal",
   data() {
     return {
-      user: { hasPets: false },
+      user: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        age: "",
+        hasPets: false,
+      },
     }
+  },
+  props: {
+    id: {
+      type: Object,
+      required: true,
+    },
+  },
+  mounted() {
+    this.getUser()
+  },
+  watch: {
+    id(to) {
+      console.log(to)
+    },
   },
   methods: {
     saveUser() {
       this.$emit("save", this.user)
+      this.$emit("close")
+    },
+    getUser() {
+      if (this.id.email) this.user = this.id
+    },
+    closeModal() {
+      this.user = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        age: "",
+        hasPets: false,
+      }
       this.$emit("close")
     },
   },
